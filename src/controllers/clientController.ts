@@ -11,4 +11,29 @@ export class ClientController {
         })
         return clients
     }
+
+    async createClient(request: FastifyRequest, reply: FastifyReply){
+        const bodySchema = z.object({
+            name: z.string(),
+            email: z.string().email(),
+            phone: z.string(),
+            deliveryAddress: z.string()
+        });
+
+        const {name, email, phone, deliveryAddress} = bodySchema.parse(request.body);
+
+        const client = await prisma.client.create({
+            data:{
+                name,
+                email,
+                phone,
+                deliveryAddress
+            }
+        });
+
+        return reply.status(201).send({
+            message: "Cliente criado com sucesso!",
+            client
+        });
+    }
 }

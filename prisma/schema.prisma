@@ -14,12 +14,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum DeliveryStatus {
+  CANCELLED
+  IN_PROGRESS
+  DELIVERED
+}
+
 model Client{
   id String @id @default(uuid())
   name String
   email String @unique
   phone String
-  deliveryAddres String
+  deliveryAddress String
+  deliveries Delivery[]
   @@map("clients")
 }
 
@@ -28,6 +35,19 @@ model Driver{
   name String
   phone String
   deliveryVehicle String
+  deliveries Delivery[]
   @@map("drivers")
 }
 
+model Delivery {
+  id String @id @default(uuid())
+  clientId String
+  driverId String
+  product String
+  price Float
+  deliveryDate DateTime
+  status DeliveryStatus
+  client Client @relation(fields: [clientId], references: [id])
+  driver Driver @relation(fields: [driverId], references: [id])
+  @@map("deliveries")
+}
