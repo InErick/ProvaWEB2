@@ -2,6 +2,7 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import { prisma } from "../lib/prisma";
 import {z} from 'zod';
 
+
 export class ClientController {
     async listALL(request: FastifyRequest, reply: FastifyReply){
         const clients = await prisma.client.findMany({
@@ -37,7 +38,7 @@ export class ClientController {
         });
     }
 
-    async getClientById(request: FastifyRequest, reply: FastifyReply){
+    async listClientById(request: FastifyRequest, reply: FastifyReply){
         const paramSchema = z.object({
             id: z.string().uuid(),
         })
