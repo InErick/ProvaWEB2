@@ -6,6 +6,7 @@ const clientController = new ClientController();
 export async function clientsRoutes(app: FastifyInstance){
     app.get('/clients',clientController.listALL);
     app.post('/clients',clientController.createClient);
+    app.get('/clients/:id', clientController.getClientById);
 }
 
 

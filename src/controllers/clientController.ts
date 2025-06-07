@@ -36,4 +36,21 @@ export class ClientController {
             client
         });
     }
+
+    async getClientById(request: FastifyRequest, reply: FastifyReply){
+        const paramSchema = z.object({
+            id: z.string().uuid(),
+        })
+
+        const {id} = paramSchema.parse(request.params)
+
+        const client = await prisma.client.findFirstOrThrow({
+            where : {
+                id,
+            }
+        })
+        return client;
+    }
+
+    
 }
