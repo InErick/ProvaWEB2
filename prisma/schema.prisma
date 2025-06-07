@@ -30,24 +30,24 @@ model Client{
   @@map("clients")
 }
 
-model Driver{
+model DeliveryMan{
   id String @id @default(uuid())
   name String
   phone String
   deliveryVehicle String
   deliveries Delivery[]
-  @@map("drivers")
+  @@map("deliveryman")
 }
 
 model Delivery {
   id String @id @default(uuid())
   clientId String
-  driverId String
+  deliverymanId String
   product String
   price Float
   deliveryDate DateTime
   status DeliveryStatus
   client Client @relation(fields: [clientId], references: [id])
-  driver Driver @relation(fields: [driverId], references: [id])
+  deliveryman DeliveryMan @relation(fields: [deliverymanId], references: [id])
   @@map("deliveries")
 }
