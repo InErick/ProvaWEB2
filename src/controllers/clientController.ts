@@ -53,5 +53,27 @@ export class ClientController {
         return client;
     }
 
+    async updateClient(request: FastifyRequest, reply: FastifyReply){
+        const paramSchema = z.object({ id: z.string().uuid()});
+        const bodySchema = z.object({
+            name: z.string(),
+            email: z.string().email(),
+            phone: z.string(),
+            deliveryAddress: z.string()
+        });
+
+        const {id} = paramSchema.parse(request.params);
+        const {name, email, phone, deliveryAddress} = bodySchema.parse(request.body);
+
+        const client = await prisma.client.update({
+            where: {id},
+            data: {name, email, phone, deliveryAddress}
+        })
+        return reply.send({
+            message:"Cliente atualizado com sucesso!",
+            client
+        })
+    }
+
     
 }

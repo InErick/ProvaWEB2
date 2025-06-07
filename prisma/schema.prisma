@@ -30,7 +30,7 @@ model Client{
   @@map("clients")
 }
 
-model DeliveryMan{
+model Deliveryman{
   id String @id @default(uuid())
   name String
   phone String
@@ -48,6 +48,6 @@ model Delivery {
   deliveryDate DateTime
   status DeliveryStatus
   client Client @relation(fields: [clientId], references: [id])
-  deliveryman DeliveryMan @relation(fields: [deliverymanId], references: [id])
+  deliveryman Deliveryman @relation(fields: [deliverymanId], references: [id])
   @@map("deliveries")
 }
